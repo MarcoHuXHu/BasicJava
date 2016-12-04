@@ -14,13 +14,15 @@ public class ClubApplication {
 		// TODO Auto-generated method stub
         Club club = new Club ();
 
+        // this annotation can ban warnings
+        @SuppressWarnings(value="all")
         Member member1, member2, member3, member4, member5;
 
-        member1 = club.addMember ("Einstein", "Albert", null);
-        member2 = club.addMember ("Picasso", "Pablo", "Ruiz");
-        member3 = club.addMember ("Webber","Andrew","Lloyd");
-        member4 = club.addMember ("Baggio", "Roberto", null);
-        member5 = club.addMember ("Raffles", "Stamford", null);
+        member1 = club.addMember (null, "Einstein", "Albert");
+        member2 = club.addMember ("Ruiz", "Picasso", "Pablo");
+        member3 = club.addMember ("Lloyd","Webber","Andrew");
+        member4 = club.addMember (null, "Baggio", "Roberto");
+        member5 = club.addMember (null, "Raffles", "Stamford");
 
         //Member Addition Testing
         System.out.println ("Current Members:");
@@ -38,6 +40,7 @@ public class ClubApplication {
         club.addFacility ("Room2", "Meeting Room on Level 3");
         club.show();
         
+        // Test Booking Class
         System.out.println ();
         DateFormat df = new SimpleDateFormat ("d-MMM-yyyy H:mm");
         try {
@@ -51,6 +54,19 @@ public class ClubApplication {
         try {
         	Booking booking2 = new Booking(member1, club.getFacility("Room1"), df.parse("1-Aug-2007 15:00"), df.parse ("1-Aug-2007 14:00"));
         	booking2.show();
+        } catch (BadBookingException be) {
+        	System.out.println ("Bad Booking Exception: " + be.getMessage());
+        } catch (Exception e) {
+        	System.out.println ("Booking class error: " + e.getMessage());
+        }
+
+        // Test BookingRegister
+        try {
+        	BookingRegister register = new BookingRegister();
+        	System.out.println ("Adding bookings for Room1 2-Aug-2007 9:00 to 12:00");
+        	register.addBooking(member1, club.getFacility("Room1"), df.parse("2-Aug-2007 9:00"), df.parse ("2-Aug-2007 12:00"));
+        	System.out.println ("Attempting to add bookings for Room1 in same time as above");
+        	register.addBooking(member2, club.getFacility("Room1"), df.parse("2-Aug-2007 10:00"), df.parse ("2-Aug-2007 11:00"));
         } catch (BadBookingException be) {
         	System.out.println ("Bad Booking Exception: " + be.getMessage());
         } catch (Exception e) {

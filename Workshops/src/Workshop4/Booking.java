@@ -9,10 +9,16 @@ import Workshop3.Member;
 
 public class Booking {
 	
-	Member member;
-	Facility facility;
-	Date startDate, endDate;
+	private Member member;
+	private Facility facility;
+	private Date startDate, endDate;
 	
+	public Member getMember() { return member;}
+	public Facility getFacility() {	return facility;}
+	public Date getStartDate() { return startDate;}
+	public Date getEndDate() { return endDate;}
+
+	// constructor throws BadBookingException
 	public Booking(Member member, Facility facility, Date date, Date date2) 
 			throws BadBookingException {
 		if (member == null)
@@ -37,8 +43,8 @@ public class Booking {
 	}
 	
 	private static DateFormat tf = new SimpleDateFormat ("d-MMM-yyyy H:mm");
-	public static final String DATE_FORMAT = "d-MMM-yyyy";
-	public static final String TIME_FORMAT = "d-MMM-yyyy H:mm";
+//	public static final String DATE_FORMAT = "d-MMM-yyyy";
+//	public static final String TIME_FORMAT = "d-MMM-yyyy H:mm";
 
 	public String toString() {
 		return ("Booking: " + facility.getName() + " (" + member + "): "

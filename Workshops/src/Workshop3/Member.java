@@ -2,7 +2,8 @@ package Workshop3;
 
 import Workshop2.Person;
 
-public class Member extends Person{
+// implements the Comparable<T> for sort
+public class Member extends Person implements Comparable<Member>{
 	int memberNumber;
 
 	public Member() {
@@ -29,7 +30,8 @@ public class Member extends Person{
 	public String toString() {
 		return memberNumber + "-" + super.toString();
 	}
-	// 添加了comparTo, 才能用Collections.sort()
+	// Override comparTo for Collections.sort()
+	@Override
 	public int compareTo(Member member2) {
 		return this.memberNumber - member2.memberNumber;
 	}

@@ -7,7 +7,7 @@ public class Club {
 	// members start at member[1] with member[0] reserved
 	private int currentNumber;
 	private Member[] members;
-	//我也就是试着搞一下final而已
+	// 我也就是试着搞一下final而已
 	private static final int ARRAY_SIZE_INCREMENT = 1;
 	//constructor
 	public Club() {

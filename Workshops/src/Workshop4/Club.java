@@ -1,9 +1,12 @@
 package Workshop4;
 
+import java.sql.Date;
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+
 
 import Workshop2.Facility;
 import Workshop3.Member;
@@ -14,28 +17,34 @@ public class Club {
 	private ArrayList<Member> members;
 	// facilities 用HashMap储存, facilities.values()为值对应的ArrayList
 	private HashMap<String, Facility> facilities;
+	private BookingRegister bookingRegister;
 	
 	//constructor
 	public Club() {
 		members = new ArrayList<Member>();
 		facilities = new HashMap<String, Facility>();
+		bookingRegister = new BookingRegister();
 	}
 	
 	// get members facilities
 	public ArrayList<Member> getMembers() {
 		//return members;
 		ArrayList<Member> result = new ArrayList<Member>(members);
-		Collections.sort(result, (left, right) -> left.compareTo(right));
-		//如果不用compareTo, 也可以用这种类似Lambda函数的形式
-		//Collections.sort(result, (left, right) -> left.getMemberNumber()-right.getMemberNumber());
+		Collections.sort(result);
+		// Once the Member class implements Comparable<T>, sort() will automatically call compareTo
+		// Otherwise, sort should be like followed
+		// Collections.sort(result, (left, right) -> left.compareTo(right));
+		// Or don't use compareTo, instead, using something like Lambda
+		Collections.sort(result, (left, right) -> left.getMemberNumber()-right.getMemberNumber());
 		return result;
 	}
 	public ArrayList<Facility> getFacilities() {
 		//return new ArrayList<Facility>(facilities.values());
 		ArrayList<Facility> result = new ArrayList<Facility>(facilities.values());
-		Collections.sort(result, (left, right) -> left.compareTo(right));
+		Collections.sort(result, (left, right) -> left.compareTo(right)); 
 		return result;
 	}
+	
 	// get certain member facility
 	public Member getMember(int memberNumber) {
 		Iterator<Member> i = members.iterator();
@@ -80,12 +89,14 @@ public class Club {
 	}
 	// show
 	public void showMembers() {
-		for (Member m : members)
-			System.out.println(m);
+		Iterator<Member> iterator = getMembers().iterator();
+		while (iterator.hasNext())
+			System.out.println(iterator.next().toString());
 	}
 	public void showFacilities() {
-		for (Facility f : facilities.values())
-			System.out.println(f);
+		Iterator<Facility> iterator = getFacilities().iterator();
+		while (iterator.hasNext())
+			System.out.println(iterator.next().toString());
 	}
     public void show() {
         System.out.println ("Current Members:");
@@ -94,4 +105,12 @@ public class Club {
         System.out.println ("Facilities:");
         showFacilities	();
     }
+    public void addBooking(Member member, Facility facility, Date startDate, Date endDate)
+    		throws BadBookingException {
+    	bookingRegister.addBooking(member, facility, startDate, endDate);
+    }
+    public ArrayList<Booking> getBookings(Facility facility, Date startDate, Date endDate) {
+    	return bookingRegister.getBookings(facility, startDate, endDate);
+    }
 }
+
